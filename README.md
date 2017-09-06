@@ -43,8 +43,7 @@ The initial files are structured as follows:
 * __src/states/Splash.js__ - A 'splash screen' state shown while assets are being loaded (with a loading progress bar).
 * __src/states/Game.js__ - An example interactive game state (i.e. level) that persists and animates.
 
-* __src/sprites/Player.js__ - An EXAMPLE sprite object for a user controlled main character
-* __src/sprites/SoundButton.js__ - An EXAMPLE sprite object for a GUI button.
+* __assets/audio__ & __assets/images__ - Example audio and music as well as images and a spritesheet
 
 # Tips for Project Success
 - When searching for help and online resources, search specifically for *phaser-ce* rather than phaser to avoid confusion.
