@@ -1,7 +1,6 @@
 # GDD 325: 2D Web Game Base
 #### A code base for student games developed in GDD 325 at UW Stout
 
-
 # Setup
 Begin by downloading the latest release version form the 'releases' on GitHub. You may also fork or clone this repo however you will then have the entire revision history of THIS repo in addition to your own and this is not recommended.
 
@@ -11,6 +10,8 @@ Make sure you have downloaded and installed the *LTS version* of [node.js](https
 You should imeadiately edit lines 2-5 in the package.json file with your team's and game's details. Do not put any of your personal details as this will be shared among the entire team.
 
 You should also edit index.html and set the title to something meaningful for your game. Of course these details may change later in the semester so be sure to remember to keep them in sync.
+
+Lastly, you shold edit THIS file!  You can have a much simpler readme for your actual game (and include a link back to this project).
 
 # Phaser Community Edition
 This project is based on phaser-ce ('community edition', sometimes called Phaser 2). It is not what you find when you go to phaser.io (this web site is largely outdated as the makers of phaser that maintain this site have moved on to version 3 which is still in alpha).
@@ -24,7 +25,9 @@ The project folders are structured as follows:
 * __src__ - All of your JavaScript code goes here.
 * __src/states__ - JS code for the various game states (levels, menus, etc.)
 * __src/sprites__ - JS code for each sprite (NOT the images/spritesheets)
-* __assets__ - All data/assets go here (both binary and JSON encoded). Use sub-folder to separate assets by type (e.g. _assets/images_ for all images).
+* __assets__ - All data/assets go here (both binary and JSON encoded).
+* __assets/audio__ - Audio data setup to be encoded to an audiosprite using the 'sfx' script.
+* __assets/images__ - All images used as assets for sprites, backgrounds, UI, etc.
 
 The following folders are managed by the tools and are automatically generated (therefore KEEP OUT):
 * __dist__ - Babel/Webpack generated files will appear hear once you compile.
@@ -32,7 +35,7 @@ The following folders are managed by the tools and are automatically generated (
 
 The initial project files are just a starting point and will change as you develop your game. You can add as many additional files as you like but please stick to the guidelines mentioned above for folders. You may also delete files you don't use BUT use caution doing this as you may find it useful later on.
 
-The initial files are structured as follows:
+The initial html/JavaScript files are structured as follows:
 * __index.html__ - The entry point for your game from which all code is loaded and run.
 
 * __src/main.js__ - The code starts here. All states should be loaded and the initial state activated.
@@ -43,7 +46,7 @@ The initial files are structured as follows:
 * __src/states/Splash.js__ - A 'splash screen' state shown while assets are being loaded (with a loading progress bar).
 * __src/states/Game.js__ - An example interactive game state (i.e. level) that persists and animates.
 
-* __assets/audio__ & __assets/images__ - Example audio and music as well as images and a spritesheet
+* __src/sprites/Player.js__ - Example of a main-player sprite.
 
 # Tips for Project Success
 - When searching for help and online resources, search specifically for *phaser-ce* rather than phaser to avoid confusion.
