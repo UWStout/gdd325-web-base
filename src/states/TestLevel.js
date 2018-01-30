@@ -33,11 +33,11 @@ class TestLevel extends Phaser.State {
     this.player = new MainPlayer({
       game: this.game,
       x: this.world.centerX,
-      y: this.world.centerY
+      y: this.world.centerY + 32
     })
 
     // Compute a reasonable height for the floor based on the height of the player sprite
-    let floorHeight = this.game.world.centerY + this.player.getBounds().height / 2
+    let floorHeight = this.player.bottom
 
     // Create the "floor" as a manually drawn rectangle
     this.floor = this.game.add.graphics(0, 0)
@@ -76,9 +76,7 @@ class TestLevel extends Phaser.State {
 
     // Control message to show on screen
     const controlText = 'L & R arrow -- walk\n' +
-                        '      SHIFT -- hold to run\n' +
-                        '   SPACEBAR -- dash\n' +
-                        '   UP arrow -- jump'
+                        '      SHIFT -- hold to run'
     let controls = this.add.text(this.game.width - 100, floorHeight + 60, controlText)
 
     // Configure all the control message font properties
@@ -185,7 +183,7 @@ class TestLevel extends Phaser.State {
       this.game.debug.spriteInfo(this.player, 32, 32)
 
       // Print some text about the player state machine
-      this.game.debug.text(`Movement: ${this.player.moveState}`, this.game.width - 350, 32)
+      this.game.debug.text(`Movement State: ${this.player.moveState}`, this.game.width - 350, 32)
 
       // Print a warning that the game is running in DEV/Debug mode
       this.game.debug.text('DEV BUILD', this.game.width - 100, this.game.height - 10, '#AA0000')

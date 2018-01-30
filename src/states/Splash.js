@@ -63,8 +63,8 @@ class Splash extends Phaser.State {
   update () {
     // Check how much time has elapsed since the stage started
     if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
-      // Switch to 'game' state once MIN_SPLASH_SECONDS or more has elapsed
-      this.state.start('Game')
+      // Switch to 'TestLevel' state once MIN_SPLASH_SECONDS or more has elapsed
+      this.state.start('TestLevel')
     }
   }
 }

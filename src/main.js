@@ -8,7 +8,7 @@ import Phaser from 'phaser'
 // Import the three main states used in our example game
 import BootState from './states/Boot' // A preliminary state that loads minimal assets
 import SplashState from './states/Splash' // A fancy loading splash screen for loading more assets
-import GameState from './states/Game' // The main game that initialized gameplay
+import TestLevelState from './states/TestLevel' // The main game level for testing
 
 // Import our general configuration file
 import config from './config'
@@ -27,7 +27,7 @@ class Game extends Phaser.Game {
     // Name and load ALL needed game states (add more states here as you make them)
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)
-    this.state.add('Game', GameState, false)
+    this.state.add('TestLevel', TestLevelState, false)
 
     // Start the 'boot' state
     // Note: during development it may be helpful to skip this and load right into the
