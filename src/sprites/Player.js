@@ -15,22 +15,11 @@ class MainPlayer extends Phaser.Sprite {
     // Setup all the animations
     this.setupAnimations()
 
-    // Enable physics (gravity and collisions)
-    this.game.physics.p2.enableBody(this)
-    this.body.mass = config.PLAYER_MASS
-    this.body.fixedRotation = true
-    this.body.allowGravity = false
-
     // All variabes that start with '_' are meant to be private
     // Initial state is stopped
     this._move_state = MainPlayer.moveStates.UNKNOWN
-    this._action_state = MainPlayer.actionStates.NONE
     this._SCALE = config.PLAYER_SCALE
     this._idle_countdown = config.IDLE_COUNTDOWN
-
-    // Initialize jump properties
-    this._timer = new Phaser.Time(this.game)
-    this._jump_timer = this._jump_step = 0
 
     // Initialize the sprite scale
     this.scale.setTo(this._SCALE)
@@ -49,22 +38,6 @@ class MainPlayer extends Phaser.Sprite {
     }
   }
 
-  get actionState () { return this._action_state }
-
-  set actionState (newState) {
-    if (this._action_state !== newState) {
-      // Update the state
-      this._action_state = newState
-      this.updateAnimation()
-    }
-  }
-
-  // Getters for read-only action properties
-  get action () { return this.actionState !== MainPlayer.actionStates.NONE }
-  get dashing () { return this.actionState === MainPlayer.actionStates.DASHING }
-  get jumping () { return this.actionState === MainPlayer.actionStates.JUMPING }
-  get falling () { return this.actionState === MainPlayer.actionStates.FALLING }
-
   // Functions to help manage the way the character is facing
   isFacingRight () { return (this.scale.x > 0) }
   isFacingLeft () { return (this.scale.x < 0) }
@@ -82,30 +55,6 @@ class MainPlayer extends Phaser.Sprite {
 
   // Update animation to match state (called only when state changes)
   updateAnimation () {
-    switch (this._action_state) {
-      case MainPlayer.actionStates.DASHING:
-        if (__DEV__) console.info('Playing "dash"')
-        this.animations.play('dash')
-        break
-
-      case MainPlayer.actionStates.JUMPING:
-        if (!this.animations.getAnimation('jump').isPlaying) {
-          if (__DEV__) console.info('Playing "jump"')
-          this._jump_timer = 0
-          this._jump_step = 0
-          this.animations.play('jump')
-        }
-        break
-
-      case MainPlayer.actionStates.FALLING:
-        if (__DEV__) console.info('Playing "fall"')
-        this.animations.play('fall')
-        break
-    }
-
-    // No move update when there's an overriding action
-    if (this.action) return
-
     switch (this._move_state) {
       case MainPlayer.moveStates.STOPPED:
         if (__DEV__) console.info('Playing "stop"')
@@ -135,27 +84,6 @@ class MainPlayer extends Phaser.Sprite {
     // Always give parent a chance to update
     super.update()
 
-    // Jump/fall movement
-    if (this.falling) {
-      if (this.y >= config.PLAYER_FLOOR - 5) {
-        this.y = config.PLAYER_FLOOR - 5
-        this.endOfAction()
-      }
-    }
-
-    if (this.jumping) {
-      // NOTE: I do not necessarily endorse this approach, it is here
-      // because it is similar to how a previous team achieved jumping
-      this._jump_timer += this._timer.physicsElapsed
-      this._jump_step = Math.exp(this._jump_timer) - 1
-      this.body.velocity.y =
-        config.JUMP_INITIAL + this._jump_step / config.JUMP_TIME * (-config.JUMP_INITIAL)
-
-      if (this._jump_timer / config.JUMP_TIME >= 1) {
-        this.actionState = MainPlayer.actionStates.FALLING
-      }
-    }
-
     // Automatically switch to idle after designated countdown
     if (this.moveState === MainPlayer.moveStates.STOPPED) {
       if (this._idle_countdown <= 0) {
@@ -181,11 +109,6 @@ class MainPlayer extends Phaser.Sprite {
     this.animations.add('jump', [96], 10, true)
     this.animations.add('fall', [84], 10, true)
 
-    // Setup dash to resume movement state once finished
-    this.animations.getAnimation('dash').onComplete.add(() => {
-      this.endOfAction()
-    }, this)
-
     // Setup the multi-stage idle animation loop
     this.animations.getAnimation('idle_breath').onComplete.add(() => {
       this.play('idle_yoyo')
@@ -203,18 +126,6 @@ class MainPlayer extends Phaser.Sprite {
       this.play('idle_breath')
     }, this)
   }
-
-  endOfAction () {
-    this.body.setZeroVelocity()
-    this.body.setZeroForce()
-
-    this._action_state = MainPlayer.actionStates.NONE
-    if (this._move_state === MainPlayer.moveStates.IDLE) {
-      this._move_state = MainPlayer.moveStates.STOPPED
-    }
-
-    this.updateAnimation()
-  }
 }
 
 // All possible player 'states'
@@ -224,13 +135,6 @@ MainPlayer.moveStates = Object.freeze({
   WALKING: 'walking',
   RUNNING: 'running',
   IDLE: 'idle'
-})
-
-MainPlayer.actionStates = Object.freeze({
-  NONE: 'none',
-  DASHING: 'dashing',
-  JUMPING: 'jumping',
-  FALLING: 'falling'
 })
 
 export default MainPlayer

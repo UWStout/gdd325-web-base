@@ -1,22 +1,28 @@
-export default {
-  gameWidth: 1000,
-  gameHeight: 666,
-  localStorageName: 'stoutGDD325',
+/**
+ * config.js: Global configuration details meant to be used in files throughout
+ * your game. Values included here should be ones that help you tweek your game
+ * or avoid writing constants more than once.
+ */
 
+export default {
+  gameWidth: 1000, // The width of the game viewport in the browser
+  gameHeight: 666, // The height of the game viewport in the browser
+  localStorageName: 'stoutGDD325', // Prefix for cookie & session storage
+
+  // Sound and music settings
   MUSIC_VOLUME: 0.1,
   SFX_VOLUME: 1.0,
+
+  // Minimum time to display the splash screen
   MIN_SPLASH_SECONDS: 2,
 
+  // Time before playing the idle animation
   IDLE_COUNTDOWN: 200,
+
+  // Values for tweeking the player character behaviors
   PLAYER_SCALE: 3.0,
   PLAYER_MASS: 5,
-
   JUMP_INITIAL: -400,
   JUMP_TIME: 0.4,
-
-  GRAVITY_CONSTANT: 1000,
-
-  // Note: the FLOOR values are computed and re-written in game.js
-  PLAYER_FLOOR: 365,
-  GLOBAL_FLOOR: 333
+  GRAVITY_CONSTANT: 1000
 }
