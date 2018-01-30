@@ -11,7 +11,7 @@ You should imeadiately edit lines 2-5 in the package.json file with your team's 
 
 You should also edit index.html and set the title to something meaningful for your game. Of course these details may change later in the semester so be sure to remember to keep them in sync.
 
-Lastly, you shold edit THIS file!  You can have a much simpler readme for your actual game (and include a link back to this project).
+Lastly, you shold edit THIS file! You can have a much simpler readme for your actual game (and include a link back to this project).
 
 # Phaser Community Edition
 This project is based on phaser-ce ('community edition', sometimes called Phaser 2). It is not what you find when you go to phaser.io (this web site is largely outdated as the makers of phaser that maintain this site have moved on to version 3 which is still in alpha).
@@ -44,17 +44,18 @@ The initial html/JavaScript files are structured as follows:
 
 * __src/states/Boot.js__ - A 'bootstrap' state used to quickly pre-load assets needed for the loading splash screen (fonts, a loading image, sprites for a loading bar, loading music, etc.)
 * __src/states/Splash.js__ - A 'splash screen' state shown while assets are being loaded (with a loading progress bar).
-* __src/states/Game.js__ - An example interactive game state (i.e. level) that persists and animates.
+* __src/states/TestLevel.js__ - An example interactive game state (i.e. level) that persists and manages music, SFX, and player input.
 
-* __src/sprites/Player.js__ - Example of a main-player sprite.
+* __src/sprites/Player.js__ - Example of a main-player sprite with animation and state management.
 
 # Tips for Project Success
+- This project was recently updated with options that better support VS Code. It is the recommended code editor.
 - When searching for help and online resources, search specifically for *phaser-ce* rather than phaser to avoid confusion.
 - Phaser can be engaged in many different ways. You will see two general approaches online: procedurally with mostly function calls and object oriented with classes.
   - You should search for and attempt the latter style! (object oriented with classes)
-- Remember, you can and should use all ES6 features especially object oriented 'class' features
+- Remember, you can and should use all ES6 features especially object oriented 'class' features.
 
 # Credits
 This project was originally forked from the [phaser-es6-webpack](https://github.com/lean/phaser-es6-webpack) project and will be regularly synced with changes to that repo. It has been customized with more comments and examples that are relevant to the GDD 325 course.
 
-Art assets and music come from the student game [The Great Tsunami Thief](https://mushroom-canopy.itch.io/tsunami-thief)
+Art assets and music come from the student game [The Great Tsunami Thief](https://mushroom-canopy.itch.io/tsunami-thief) which was developed in a previous version of this course.
