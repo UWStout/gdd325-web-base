@@ -8,9 +8,9 @@ Make sure you have downloaded and installed the *LTS version* of [node.js](https
 
 ## Extra Options
 This project has some extra things you can do with it out of the box compared to the original phaser-es6-webpack project:
-* __Test your Deploy Build__ - do 'npm run prod' to create a build that is identical to the deployment version but that still runs the browsersync server. This is handy for testing the deployment build.
-* __Package for NWJS__ Do - 'npm run package' to create a standalone executable version of your game built using NWJS. Currently Windows and MacOS are supported (64bit only). It builds the executable that matches your current operating system.
-* NOTE: Unlike the original project, this one does not support cordova.
+* __Test your Deploy Build__ - Do 'npm run prod' to create a build that is identical to the deployment version but that still runs the browsersync server. This is handy for testing the deployment build.
+* __Package for NWJS__ - Do 'npm run package' to create a standalone executable version of your game built using NWJS. Currently Windows and MacOS are supported (64bit only). It builds the executable that matches your current operating system.
+* __NOTE:__ Unlike the original project, this one does not support cordova.
 
 When you package to an executable the global variable `__NWJS__` will be set to true (normally set to false). You can use this to run different code when it is running in this mode (handling things like automatically entering fullscreen or adding a 'quit' option).
 
