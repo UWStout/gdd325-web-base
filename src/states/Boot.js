@@ -6,6 +6,9 @@ import Phaser from 'phaser'
 // See more here: https://www.npmjs.com/package/webfontloader
 import WebFont from 'webfontloader'
 
+// Grab some global configuration options for local use
+import config from '../config'
+
 /**
  * The Boot game state. This game state is used as a quick, low-impact
  * game state that will pre-load any assets needed for a more feature-
@@ -34,12 +37,14 @@ class Boot extends Phaser.State {
   preload () {
     // Load needed font (will load asynchronously)
     // Calls fontsLoaded() when complete
-    WebFont.load({
-      google: {
-        families: ['Libre Franklin']
-      },
-      active: this.fontsLoaded
-    })
+    if (config.webfonts && config.webfonts.length) {
+      WebFont.load({
+        google: {
+          families: config.webfonts
+        },
+        active: this.fontsLoaded
+      })
+    }
 
     // Show message that fonts are loading
     let text = this.add.text(this.world.centerX, this.world.centerY,
@@ -55,7 +60,12 @@ class Boot extends Phaser.State {
   // Called repeatedly after pre-load to draw the stage
   render () {
     // Wait for font before proceeding
-    if (this.fontsReady) {
+    if (config.webfonts.length > 0 && this.fontsReady) {
+      this.state.start('Splash')
+    }
+
+    // No fonts need to load so just get to it
+    if (!config.webfonts || config.webfonts.length == 0) {
       this.state.start('Splash')
     }
   }
