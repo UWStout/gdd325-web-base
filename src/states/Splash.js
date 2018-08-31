@@ -57,14 +57,46 @@ class Splash extends Phaser.State {
     // Destroy progress bar assets
     this.loaderBar.destroy()
     this.loaderBg.destroy()
+
+    // Setup the audio which should now be loaded
+    this.setupAudio()
+  }
+
+  setupAudio () {
+    // Load the audio sprite into the global game object (and also make a local variable)
+    let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
+
+    // Make the different music sections flow into one another in a seemless loop
+    // (this is unusually complex and your audio probabaly wont need it)
+    sounds.get('music-intro').onStop.add(() => {
+      sounds.play('music-theme1', config.MUSIC_VOLUME)
+    })
+
+    for (let i = 1; i < 4; i++) {
+      sounds.get(`music-theme${i}`).onStop.add(() => {
+        sounds.play(`music-theme${i + 1}`, config.MUSIC_VOLUME)
+      })
+    }
+
+    sounds.get('music-theme4').onStop.add(() => {
+      sounds.play('music-bridge', config.MUSIC_VOLUME)
+    })
+
+    // Theme 2 seems to flow out of the bridge better than theme 1
+    sounds.get('music-bridge').onStop.add(() => {
+      sounds.play('music-theme2', config.MUSIC_VOLUME)
+    })
   }
 
   // Called repeatedly after pre-load finishes and after 'create' has run
   update () {
-    // Check how much time has elapsed since the stage started
+    // Check how much time has elapsed since the stage started and only
+    // proceed once MIN_SPLASH_SECONDS or more has elapsed
     if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
-      // Switch to 'TestLevel' state once MIN_SPLASH_SECONDS or more has elapsed
-      this.state.start('TestLevel')
+      // Make sure the audio is not only loaded but also decoded before advancing
+      if (this.game.sounds.get('music-intro').isDecoded) {
+        this.state.start('TestLevel')
+      }
     }
   }
 }

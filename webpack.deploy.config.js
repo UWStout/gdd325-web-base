@@ -1,42 +1,59 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // Phaser webpack config
-var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/')
-var phaser = path.join(phaserModule, 'build/custom/phaser-split.js')
-var pixi = path.join(phaserModule, 'build/custom/pixi.js')
-var p2 = path.join(phaserModule, 'build/custom/p2.js')
+const phaserModule = path.join(__dirname, '/node_modules/phaser-ce/')
+const phaser = path.join(phaserModule, 'build/custom/phaser-split.js')
+const pixi = path.join(phaserModule, 'build/custom/pixi.js')
+const p2 = path.join(phaserModule, 'build/custom/p2.js')
 
-var definePlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false'))
+// These variables will be injected into the global namespace
+// - if __DEV__ is true then the program is running in a development environment
+// - if __NWJS__ is true then the program was compiled to run inside NWJS (as a standalone exe)
+const definePlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
+  __NWJS__: JSON.stringify(JSON.parse(process.env.NWJS || 'false'))
 })
 
+// Export the configuration for webpack
 module.exports = {
   entry: {
-    app: [
-      'babel-polyfill',
-      path.resolve(__dirname, 'src/main.js')
-    ],
-    vendor: ['pixi', 'p2', 'phaser', 'webfontloader']
+    app: path.resolve(__dirname, 'src/main.js'),
+    vendor: ['pixi', 'p2', 'phaser', 'webfontloader', '@babel/polyfill']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: './dist/',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: 'initial',
+          name: 'vendor',
+          test: 'vendor',
+          enforce: true
+        }
+      }
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          drop_console: true,
+          minimize: true,
+          output: {
+            comments: false
+          }
+        }
+      })
+    ],
+  },
+  mode: 'production',
   plugins: [
     definePlugin,
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.UglifyJsPlugin({
-      drop_console: true,
-      minimize: true,
-      output: {
-        comments: false
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor', filename: 'vendor.bundle.js'
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -62,3 +79,4 @@ module.exports = {
     }
   }
 }
+

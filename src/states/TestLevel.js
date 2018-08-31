@@ -51,9 +51,8 @@ class TestLevel extends Phaser.State {
     // Setup all the text displayed on screen
     this.setupText(floorHeight)
 
-    // Setup all the audio
-    this.setupAudio()
-    this.sounds.play('music-intro', config.MUSIC_VOLUME)
+    // Start playing the background music
+    this.game.sounds.play('music-intro', config.MUSIC_VOLUME)
 
     // Setup the key objects
     this.setupKeyboard()
@@ -106,39 +105,13 @@ class TestLevel extends Phaser.State {
     credits.anchor.setTo(0, 0)
   }
 
-  setupAudio () {
-    // Load the audio sprite into the level (and make a local variable)
-    let sounds = this.sounds = this.game.add.audioSprite('sounds')
-
-    // Make the different music sections flow into one another
-    // in a seamless loop (this is unusually complex)
-    this.sounds.get('music-intro').onStop.add(() => {
-      sounds.play('music-theme1', config.MUSIC_VOLUME)
-    })
-
-    for (let i = 1; i < 4; i++) {
-      this.sounds.get(`music-theme${i}`).onStop.add(() => {
-        sounds.play(`music-theme${i + 1}`, config.MUSIC_VOLUME)
-      })
-    }
-
-    this.sounds.get('music-theme4').onStop.add(() => {
-      sounds.play('music-bridge', config.MUSIC_VOLUME)
-    })
-
-    // Theme 2 seems to flow out of the bridge better than theme 1
-    this.sounds.get('music-bridge').onStop.add(() => {
-      sounds.play('music-theme2', config.MUSIC_VOLUME)
-    })
-  }
-
   setupKeyboard () {
-    //  Register the keys
+    // Register the keys
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
     this.sprintKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
 
-    //  Stop the following keys from propagating up to the browser
+    // Stop the following keys from propagating up to the browser
     this.game.input.keyboard.addKeyCapture([
       Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SHIFT
     ])
@@ -162,12 +135,12 @@ class TestLevel extends Phaser.State {
     if (Math.abs(speed) > 1) {
       // Player is running
       this.player.moveState = MainPlayer.moveStates.RUNNING
-      if (!this.sounds.get('running').isPlaying) {
-        this.sounds.play('running', config.SFX_VOLUME)
+      if (!this.game.sounds.get('running').isPlaying) {
+        this.game.sounds.play('running', config.SFX_VOLUME)
       }
     } else {
       // Player is walking or stopped
-      this.sounds.stop('running')
+      this.game.sounds.stop('running')
       if (Math.abs(speed) > 0) {
         this.player.moveState = MainPlayer.moveStates.WALKING
       } else {
