@@ -6,6 +6,14 @@ Begin by downloading the latest release version form the 'releases' on GitHub. Y
 
 Make sure you have downloaded and installed the *LTS version* of [node.js](https://nodejs.org/) then follow the instructions for setup starting from step 3 in the [original project](https://github.com/lean/phaser-es6-webpack) readme.
 
+## Extra Options
+This project has some extra things you can do with it out of the box compared to the original phaser-es6-webpack project:
+* __Test your Deploy Build__ - Do 'npm run prod' to create a build that is identical to the deployment version but that still runs the browsersync server. This is handy for testing the deployment build.
+* __Package for NWJS__ - Do 'npm run package' to create a standalone executable version of your game built using NWJS. Currently Windows and MacOS are supported (64bit only). It builds the executable that matches your current operating system.
+* __NOTE:__ Unlike the original project, this one does not support cordova.
+
+When you package to an executable the global variable `__NWJS__` will be set to true (normally set to false). You can use this to run different code when it is running in this mode (handling things like automatically entering fullscreen or adding a 'quit' option).
+
 # Customization
 You should imeadiately edit lines 2-5 in the package.json file with your team's and game's details. Do not put any of your personal details as this will be shared among the entire team.
 
@@ -31,6 +39,7 @@ The project folders are structured as follows:
 
 The following folders are managed by the tools and are automatically generated (therefore KEEP OUT):
 * __dist__ - Babel/Webpack generated files will appear hear once you compile.
+* __packaged__ - NW-Builder generated files will appear hear once you package your game as an exe.
 * __node_modules__ - These are packages used by node (lots of JS libraries).
 
 The initial project files are just a starting point and will change as you develop your game. You can add as many additional files as you like but please stick to the guidelines mentioned above for folders. You may also delete files you don't use BUT use caution doing this as you may find it useful later on.
@@ -49,13 +58,14 @@ The initial html/JavaScript files are structured as follows:
 * __src/sprites/Player.js__ - Example of a main-player sprite with animation and state management.
 
 # Tips for Project Success
-- This project was recently updated with options that better support VS Code. It is the recommended code editor.
+- This project deliberately inclues options to support use of VS Code. It is the recommended code editor.
 - When searching for help and online resources, search specifically for *phaser-ce* rather than phaser to avoid confusion.
 - Phaser can be engaged in many different ways. You will see two general approaches online: procedurally with mostly function calls and object oriented with classes.
   - You should search for and attempt the latter style! (object oriented with classes)
 - Remember, you can and should use all ES6 features especially object oriented 'class' features.
+- You can now bundle your game to an executable that uses NWJS with the 'package' script.
 
 # Credits
-This project was originally forked from the [phaser-es6-webpack](https://github.com/lean/phaser-es6-webpack) project and will be regularly synced with changes to that repo. It has been customized with more comments and examples that are relevant to the GDD 325 course.
+This project was originally forked from the [phaser-es6-webpack](https://github.com/lean/phaser-es6-webpack) project and is occasionally synced with changes from that repo (by hand, not via a git merge). It has been customized with more comments and examples that are relevant to the GDD 325 course.
 
 Art assets and music come from the student game [The Great Tsunami Thief](https://mushroom-canopy.itch.io/tsunami-thief) which was developed in a previous version of this course.
