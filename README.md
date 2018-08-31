@@ -31,6 +31,7 @@ The project folders are structured as follows:
 
 The following folders are managed by the tools and are automatically generated (therefore KEEP OUT):
 * __dist__ - Babel/Webpack generated files will appear hear once you compile.
+* __packaged__ - NW-Builder generated files will appear hear once you package your game as an exe.
 * __node_modules__ - These are packages used by node (lots of JS libraries).
 
 The initial project files are just a starting point and will change as you develop your game. You can add as many additional files as you like but please stick to the guidelines mentioned above for folders. You may also delete files you don't use BUT use caution doing this as you may find it useful later on.
@@ -49,13 +50,14 @@ The initial html/JavaScript files are structured as follows:
 * __src/sprites/Player.js__ - Example of a main-player sprite with animation and state management.
 
 # Tips for Project Success
-- This project was recently updated with options that better support VS Code. It is the recommended code editor.
+- This project deliberately inclues options to support use of VS Code. It is the recommended code editor.
 - When searching for help and online resources, search specifically for *phaser-ce* rather than phaser to avoid confusion.
 - Phaser can be engaged in many different ways. You will see two general approaches online: procedurally with mostly function calls and object oriented with classes.
   - You should search for and attempt the latter style! (object oriented with classes)
 - Remember, you can and should use all ES6 features especially object oriented 'class' features.
+- You can now bundle your game to an executable that uses NWJS with the 'package' script.
 
 # Credits
-This project was originally forked from the [phaser-es6-webpack](https://github.com/lean/phaser-es6-webpack) project and will be regularly synced with changes to that repo. It has been customized with more comments and examples that are relevant to the GDD 325 course.
+This project was originally forked from the [phaser-es6-webpack](https://github.com/lean/phaser-es6-webpack) project and is occasionally synced with changes from that repo (by hand, not via a git merge). It has been customized with more comments and examples that are relevant to the GDD 325 course.
 
 Art assets and music come from the student game [The Great Tsunami Thief](https://mushroom-canopy.itch.io/tsunami-thief) which was developed in a previous version of this course.
