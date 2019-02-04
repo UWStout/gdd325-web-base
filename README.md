@@ -21,10 +21,8 @@ You should also edit index.html and set the title to something meaningful for yo
 
 Lastly, you shold edit THIS file! You can have a much simpler readme for your actual game (and include a link back to this project).
 
-# Phaser Community Edition
-This project is based on phaser-ce ('community edition', sometimes called Phaser 2). It is not what you find when you go to phaser.io (this web site is largely outdated as the makers of phaser that maintain this site have moved on to version 3 which is still in alpha).
-
-The best browsable documentation for *phaser-ce* is available online at (https://photonstorm.github.io/phaser-ce/index.html). You can download this documentation to browse locally by grabbing the latest copy of the 'docs' folder at the [phaser-ce repo](https://github.com/photonstorm/phaser-ce) (just open index.html in your browser).
+# Phaser 3
+This project is now based on phaser 3 (NOT the 'community edition', sometimes called Phaser 2).  It was previously based on the CE edition but was recently updated as phaser 3 is quite mature and ready for prime-time!
 
 # Project Structure
 The various folders in the project directory all serve specific purposes. Please try to adhere to the conventions listed below when adding new files to your project so that things stay organized and it is easier to work concurrently without stepping on each other's toes.
