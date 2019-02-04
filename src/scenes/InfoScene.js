@@ -28,7 +28,9 @@ class InfoScene extends Phaser.Scene {
   setupText (floorHeight, width, height) {
     // Control message to show on screen
     const controlText = 'L & R arrow -- walk\n' +
-                        '      SHIFT -- hold to run'
+                        '      SHIFT -- hold to run\n' +
+                        '      SPACE -- jump\n' +
+                        '          E -- interact'
     let controls = this.add.text(width - 100, floorHeight + 80, controlText)
 
     // Configure all the control message font properties

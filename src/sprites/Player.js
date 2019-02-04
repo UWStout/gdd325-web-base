@@ -78,6 +78,15 @@ class MainPlayer extends Phaser.GameObjects.Sprite {
         break
     }
 
+    // Trigger running sfx
+    if (this._moveFSM.state === 'running') {
+      if (!this.runningSFX.isPlaying) {
+        this.runningSFX.play('running', { volume: this.runningSFX.volume })
+      }
+    } else {
+      this.runningSFX.stop()
+    }
+    
     // Play the indicated animation (state names and animation names must match!)
     if (__DEV__) { console.log(`Playing ${this._moveFSM.state}`) }
     this.anims.play(this._moveFSM.state)
@@ -93,15 +102,6 @@ class MainPlayer extends Phaser.GameObjects.Sprite {
     if (this.body.velocity.y > 0.8 && this.currentState !== 'falling') {
       this.do('fall')
     } else {
-      // Trigger running sfx
-      if (this.currentState === 'running') {
-        if (!this.runningSFX.isPlaying) {
-          this.runningSFX.play('running', { volume: this.runningSFX.volume })
-        }
-      } else {
-        this.runningSFX.stop()
-      }
-
       // Update according to the current state
       switch (this.currentState) {
         case 'walking':

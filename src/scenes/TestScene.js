@@ -3,6 +3,9 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 
+// Import the global config file
+import config from '../config'
+
 // Import the main player sprite
 import MainPlayer from '../sprites/Player'
 
@@ -27,7 +30,7 @@ class TestScene extends Phaser.Scene {
 
     // Start playing the background music
     this.setupAudio()
-    this.music.play('music-intro')
+    this.music.play('music-intro', { volume: config.MUSIC_VOLUME })
 
     // Create and add the main player object
     this.player = new MainPlayer({
@@ -35,6 +38,7 @@ class TestScene extends Phaser.Scene {
       x: width / 2,
       y: height / 2 + 32
     })
+    this.player.setSFXVolume(config.SFX_VOLUME)
 
     // Setup the camera
     this.setupCamera()
