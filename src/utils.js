@@ -4,28 +4,56 @@
  */
 
 /**
- * Set the anchor of all passed in objects to be (0.5, 0.5) so they
+ * Set the origin of all passed in objects to be (0.5, 0.5) so they
  * are drawn around their own logical center.
- * @param {array} objects An array of PIXI objects to be centered.
+ * @param {array} objects An array of GameObjects objects to be centered.
  */
 export const centerGameObjects = (objects) => {
   objects.forEach(function (object) {
-    object.anchor.setTo(0.5)
+    object.setOrigin(0.5, 0.5)
   })
 }
 
 /**
- * Generate an array of sequential integers spanning the range [first last]
- * (where first and last are included).  This is VERY handy for defining
- * animations that occur sequentially in your spritesheets.
- * @param {number} first The first number in the returned sequence.
- * @param {number} last The last number in the returned sequence.
- * @return {array} An array of integers spanning the range [first last]
+ * Retieve the currently configured game width (likely set when the Phaser.Game was created)
+ * @param {Phaser.Scene} scene Scene object to use to retrieve the game config width
  */
-export const sequentialNumArray = (first, last) => {
-  let newArray = []
-  for (var i = first; i <= last; i++) {
-    newArray.push(i)
+export const gameWidth = (scene) => {
+  return scene.sys.game.config.width
+}
+
+/**
+ * Retieve the currently configured game height (likely set when the Phaser.Game was created)
+ * @param {Phaser.Scene} scene Scene object to use to retrieve the game config height
+ */
+export const gameHeight = (scene) => {
+  return scene.sys.game.config.height
+}
+
+/**
+ * Retieve the horizontal center of the world for the current scene
+ * If the main camera has bounds, it will use those.  Otherwise, returns the width of the
+ * configured game bounds divided by 2.
+ * @param {Phaser.Scene} scene Scene object to use to get horizontal center
+ */
+export const centerX = (scene) => {
+  if (scene.cameras.main.useBounds) {
+    return scene.cameras.main._bounds.width / 2
+  } else {
+    return gameWidth(scene) / 2
   }
-  return newArray
+}
+
+/**
+ * Retieve the vertical center of the world for the current scene
+ * If the main camera has bounds, it will use those.  Otherwise, returns the height of the
+ * configured game bounds divided by 2.
+ * @param {Phaser.Scene} scene Scene object to use to get vertical center
+ */
+export const centerY = (scene) => {
+  if (scene.cameras.main.useBounds) {
+    return scene.cameras.main._bounds.height / 2
+  } else {
+    return gameHeight(scene) / 2
+  }
 }

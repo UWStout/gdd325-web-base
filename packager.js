@@ -8,7 +8,9 @@ let FILES = [
   path.resolve('index.html'),
   path.resolve('./dist/*.js'),
   path.resolve('./assets/images/**/*'),
-  path.resolve('./assets/audio/sounds.*')
+  path.resolve('./assets/fonts/**/*'),
+  path.resolve('./assets/audio/sounds.ogg'),
+  path.resolve('./assets/audio/sounds.json')
 ]
 
 // Start the nw-builder configuration object
@@ -16,7 +18,7 @@ let NW_CONFIG = {
   files: FILES,
   buildDir: './packaged/',
   cacheDir: './node_modules/nw-builder/cache/',
-  flavor: 'normal'
+  flavor: 'sdk'
 }
 
 // Customize for the current platform

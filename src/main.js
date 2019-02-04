@@ -1,17 +1,41 @@
-// Import the two main libraries that Phaser will depend on (only done once)
-import 'pixi' // The underlying sprite library of Phaser
-import 'p2' // The most flexible physics library used in Phaser
+/* globals __DEV__ */
 
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 
-// Import the three main states used in our example game
-import BootState from './states/Boot' // A preliminary state that loads minimal assets
-import SplashState from './states/Splash' // A fancy loading splash screen for loading more assets
-import TestLevelState from './states/TestLevel' // The main game level for testing
+// IMport the update plugin
+import 'phaser-plugin-update'
+import PhaserDebugDrawPlugin from 'phaser-plugin-debug-draw'
+import UIPlugin from '../plugins/rexrainbow/rexuiplugin.min'
+
+// Import the scenes used in our game
+import BootScene from './scenes/Boot' // A bootstraping loader that loads the assets need by ... the loader!
+import SplashScene from './scenes/Splash' // A fancy loading splash screen for loading more assets
+import TestScene from './scenes/TestScene' // The main game level for testing
+import InfoScene from './scenes/InfoScene' // Some static info locked to the camera (like a HUD)
+import PauseMenuScene from './scenes/PauseMenuScene' // A menu displayed while the game is paused
 
 // Import our general configuration file
 import config from './config'
+
+// Setup the plugins
+let scenePlugins = [{
+  key: 'updatePlugin',
+  plugin: Phaser.Plugins.UpdatePlugin,
+  mapping: 'updates'
+}, {
+  key: 'rexUI',
+  plugin: UIPlugin,
+  mapping: 'rexUI'
+}]
+
+if (__DEV__) {
+  scenePlugins.push({
+    key: 'DebugDrawPlugin',
+    plugin: PhaserDebugDrawPlugin,
+    mapping: 'debugDraw'
+  })
+}
 
 /**
  * The main class that encapsulates the entirity of our game including all the game states,
@@ -22,17 +46,39 @@ class Game extends Phaser.Game {
   // Function automatically called upon class creation
   constructor () {
     // Pass configuration details to Phaser.Game
-    super(config.gameWidth, config.gameHeight, Phaser.AUTO, 'content', null)
+    super({
+      pixelArt: true, // TODO: Turn this off if you aren't doing pixel art!!
+      width: config.gameWidth,
+      height: config.gameHeight,
+      type: Phaser.WEBGL,
+      parent: 'content',
+      title: 'Example Game for GDD325',
+      backgroundColor: '#7f7f7f',
+      plugins: {
+        scene: scenePlugins
+      },
+      physics: {
+        default: 'matter',
+        matter: {
+          debug: __DEV__,
+          gravity: {
+            y: 0.8
+          }
+        }
+      }
+    })
 
-    // Name and load ALL needed game states (add more states here as you make them)
-    this.state.add('Boot', BootState, false)
-    this.state.add('Splash', SplashState, false)
-    this.state.add('TestLevel', TestLevelState, false)
+    // Name and load ALL needed game scenes (add more scenes here as you make them)
+    this.scene.add('Boot', BootScene, false)
+    this.scene.add('Splash', SplashScene, false)
+    this.scene.add('Test', TestScene, false)
 
-    // Start the 'boot' state
-    // Note: during development it may be helpful to skip this and load right into the
-    //       first level just to save having to watch the splash screen every time.
-    this.state.start('Boot')
+    // Extra scenes showing how you can layer scenes together
+    this.scene.add('Info', InfoScene, false)
+    this.scene.add('PauseMenu', PauseMenuScene, false)
+
+    // Start with the bootstrap scene that will load assets needed for the splash scene
+    this.scene.start('Boot')
   }
 }
 

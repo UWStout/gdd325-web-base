@@ -1,0 +1,182 @@
+<svg width="994pt" height="514pt" viewBox="0.00 0.00 994.00 513.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 509.8)">
+<title>fsm</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-509.8 991,-509.8 991,5 -4,5"></polygon>
+<!-- standing -->
+<g id="node1" class="node"><title>standing</title>
+<ellipse fill="none" stroke="black" cx="44" cy="-190" rx="43.5214" ry="18"></ellipse>
+<text text-anchor="middle" x="44" y="-185.8" font-family="Times,serif" font-size="14.00">standing</text>
+</g>
+<!-- idling -->
+<g id="node2" class="node"><title>idling</title>
+<ellipse fill="none" stroke="black" cx="198" cy="-296" rx="33.646" ry="18"></ellipse>
+<text text-anchor="middle" x="198" y="-291.8" font-family="Times,serif" font-size="14.00">idling</text>
+</g>
+<!-- standing&#45;&gt;idling -->
+<g id="edge2" class="edge"><title>standing-&gt;idling</title>
+<path fill="none" stroke="black" d="M57.3774,-207.324C68.6673,-222.115 86.5197,-243.135 106,-257 121.92,-268.331 141.647,-277.29 158.66,-283.748"></path>
+<polygon fill="black" stroke="black" points="157.72,-287.131 168.314,-287.261 160.114,-280.553 157.72,-287.131"></polygon>
+<text text-anchor="middle" x="126" y="-282.2" font-family="Times,serif" font-size="14.00"> bored </text>
+</g>
+<!-- dashing -->
+<g id="node3" class="node"><title>dashing</title>
+<ellipse fill="none" stroke="black" cx="499" cy="-147" rx="41.1529" ry="18"></ellipse>
+<text text-anchor="middle" x="499" y="-142.8" font-family="Times,serif" font-size="14.00">dashing</text>
+</g>
+<!-- standing&#45;&gt;dashing -->
+<g id="edge42" class="edge"><title>standing-&gt;dashing</title>
+<path fill="none" stroke="black" d="M87.8882,-191.981C99.9327,-192.001 113.012,-191.516 125,-190"></path>
+<path fill="none" stroke="black" d="M127,-190C143.463,-187.919 147.536,-187.073 164,-185 270.549,-171.586 297.272,-168.903 404,-157 418.437,-155.39 434.129,-153.698 448.481,-152.173"></path>
+<polygon fill="black" stroke="black" points="449.082,-155.629 458.658,-151.095 448.345,-148.668 449.082,-155.629"></polygon>
+<text text-anchor="middle" x="267" y="-179.2" font-family="Times,serif" font-size="14.00"> dash </text>
+</g>
+<!-- walking -->
+<g id="node4" class="node"><title>walking</title>
+<ellipse fill="none" stroke="black" cx="344" cy="-246" rx="42.2952" ry="18"></ellipse>
+<text text-anchor="middle" x="344" y="-241.8" font-family="Times,serif" font-size="14.00">walking</text>
+</g>
+<!-- standing&#45;&gt;walking -->
+<g id="edge4" class="edge"><title>standing-&gt;walking</title>
+<path fill="none" stroke="black" d="M127,-190C191.945,-179.879 265.683,-207.772 308.031,-227.736"></path>
+<polygon fill="black" stroke="black" points="306.557,-230.911 317.084,-232.11 309.602,-224.608 306.557,-230.911"></polygon>
+<text text-anchor="middle" x="198" y="-203.2" font-family="Times,serif" font-size="14.00"> walk </text>
+</g>
+<!-- running -->
+<g id="node5" class="node"><title>running</title>
+<ellipse fill="none" stroke="black" cx="651" cy="-204" rx="41.1548" ry="18"></ellipse>
+<text text-anchor="middle" x="651" y="-199.8" font-family="Times,serif" font-size="14.00">running</text>
+</g>
+<!-- standing&#45;&gt;running -->
+<g id="edge12" class="edge"><title>standing-&gt;running</title>
+<path fill="none" stroke="black" d="M51.3128,-172.067C60.225,-149.086 78.5355,-109.317 106,-85 138.945,-55.8306 152.998,-46 197,-46 197,-46 197,-46 500,-46 544.411,-46 559.782,-54.4327 592,-85 618.347,-109.997 634.267,-149.477 642.594,-176.035"></path>
+<polygon fill="black" stroke="black" points="639.311,-177.275 645.515,-185.864 646.021,-175.281 639.311,-177.275"></polygon>
+<text text-anchor="middle" x="344" y="-50.2" font-family="Times,serif" font-size="14.00"> run </text>
+</g>
+<!-- jumping -->
+<g id="node6" class="node"><title>jumping</title>
+<ellipse fill="none" stroke="black" cx="801" cy="-311" rx="43.461" ry="18"></ellipse>
+<text text-anchor="middle" x="801" y="-306.8" font-family="Times,serif" font-size="14.00">jumping</text>
+</g>
+<!-- standing&#45;&gt;jumping -->
+<g id="edge24" class="edge"><title>standing-&gt;jumping</title>
+<path fill="none" stroke="black" d="M52.1738,-207.99C79.7803,-273.964 185.543,-497.983 343,-482"></path>
+<path fill="none" stroke="black" d="M345,-482C374.572,-481.294 375.623,-459.55 404,-451.2 484.492,-427.515 511.872,-458.889 592,-434 664.021,-411.629 675.689,-390.39 740,-351 749.627,-345.103 759.918,-338.397 769.209,-332.184"></path>
+<polygon fill="black" stroke="black" points="771.422,-334.913 777.756,-326.42 767.508,-329.109 771.422,-334.913"></polygon>
+<text text-anchor="middle" x="422" y="-456.2" font-family="Times,serif" font-size="14.00"> jump </text>
+</g>
+<!-- falling -->
+<g id="node7" class="node"><title>falling</title>
+<ellipse fill="none" stroke="black" cx="950" cy="-253" rx="36.4936" ry="18"></ellipse>
+<text text-anchor="middle" x="950" y="-248.8" font-family="Times,serif" font-size="14.00">falling</text>
+</g>
+<!-- standing&#45;&gt;falling -->
+<g id="edge36" class="edge"><title>standing-&gt;falling</title>
+<path fill="none" stroke="black" d="M345,-482C547.214,-478.422 600.703,-509.412 800,-475"></path>
+<text text-anchor="middle" x="499" y="-493.2" font-family="Times,serif" font-size="14.00"> fall </text>
+</g>
+<!-- idling&#45;&gt;walking -->
+<g id="edge6" class="edge"><title>idling-&gt;walking</title>
+<path fill="none" stroke="black" d="M226.765,-286.359C247.883,-279.027 277.291,-268.816 301.242,-260.499"></path>
+<polygon fill="black" stroke="black" points="302.497,-263.769 310.796,-257.182 300.201,-257.156 302.497,-263.769"></polygon>
+<text text-anchor="middle" x="267" y="-281.2" font-family="Times,serif" font-size="14.00"> walk </text>
+</g>
+<!-- idling&#45;&gt;running -->
+<g id="edge14" class="edge"><title>idling-&gt;running</title>
+<path fill="none" stroke="black" d="M218.606,-310.62C245.513,-329.045 295.92,-357.779 343,-353"></path>
+<path fill="none" stroke="black" d="M345,-353C374.58,-352.853 375.579,-330.4 404,-322.2 484.543,-298.961 521.394,-352.188 592,-307 618.619,-289.964 634.201,-256.151 642.392,-231.911"></path>
+<polygon fill="black" stroke="black" points="645.789,-232.775 645.461,-222.185 639.114,-230.669 645.789,-232.775"></polygon>
+<text text-anchor="middle" x="422" y="-327.2" font-family="Times,serif" font-size="14.00"> run </text>
+</g>
+<!-- idling&#45;&gt;jumping -->
+<g id="edge26" class="edge"><title>idling-&gt;jumping</title>
+<path fill="none" stroke="black" d="M345,-353C480.591,-353.163 514.417,-347.536 650,-346"></path>
+<text text-anchor="middle" x="499" y="-356.2" font-family="Times,serif" font-size="14.00"> jump </text>
+</g>
+<!-- dashing&#45;&gt;walking -->
+<g id="edge8" class="edge"><title>dashing-&gt;walking</title>
+<path fill="none" stroke="black" d="M460.616,-153.488C442.456,-157.869 420.953,-164.969 404,-176.2 386.75,-187.628 371.765,-205.525 361.213,-220.336"></path>
+<polygon fill="black" stroke="black" points="358.296,-218.4 355.529,-228.627 364.07,-222.358 358.296,-218.4"></polygon>
+<text text-anchor="middle" x="422" y="-181.2" font-family="Times,serif" font-size="14.00"> walk </text>
+</g>
+<!-- dashing&#45;&gt;running -->
+<g id="edge16" class="edge"><title>dashing-&gt;running</title>
+<path fill="none" stroke="black" d="M529.023,-134.412C547.787,-128.217 572.294,-123.869 592,-133.2 611.208,-142.295 626.177,-161.212 636.093,-177.206"></path>
+<polygon fill="black" stroke="black" points="633.275,-179.32 641.342,-186.188 639.319,-175.789 633.275,-179.32"></polygon>
+<text text-anchor="middle" x="575" y="-138.2" font-family="Times,serif" font-size="14.00"> run </text>
+</g>
+<!-- walking&#45;&gt;standing -->
+<g id="edge20" class="edge"><title>walking-&gt;standing</title>
+<path fill="none" stroke="black" d="M303.365,-241.055C266.976,-236.271 211.642,-228.379 164,-219 139.665,-214.209 112.802,-207.764 90.7668,-202.167"></path>
+<polygon fill="black" stroke="black" points="91.5645,-198.758 81.0085,-199.663 89.8251,-205.538 91.5645,-198.758"></polygon>
+<text text-anchor="middle" x="198" y="-235.2" font-family="Times,serif" font-size="14.00"> stop </text>
+</g>
+<!-- walking&#45;&gt;dashing -->
+<g id="edge44" class="edge"><title>walking-&gt;dashing</title>
+<path fill="none" stroke="black" d="M371.89,-232.488C391.297,-222.383 417.868,-207.809 440,-193 441.708,-191.857 456.186,-180.375 470.248,-169.169"></path>
+<polygon fill="black" stroke="black" points="472.744,-171.655 478.38,-162.684 468.38,-166.182 472.744,-171.655"></polygon>
+<text text-anchor="middle" x="422" y="-219.2" font-family="Times,serif" font-size="14.00"> dash </text>
+</g>
+<!-- walking&#45;&gt;running -->
+<g id="edge18" class="edge"><title>walking-&gt;running</title>
+<path fill="none" stroke="black" d="M369.718,-260.347C384.134,-267.69 402.979,-275.584 421,-278"></path>
+<path fill="none" stroke="black" d="M423,-278C427.741,-278.636 543.708,-239.867 608.006,-218.198"></path>
+<polygon fill="black" stroke="black" points="609.5,-221.388 617.857,-214.876 607.263,-214.755 609.5,-221.388"></polygon>
+<text text-anchor="middle" x="499" y="-272.2" font-family="Times,serif" font-size="14.00"> run </text>
+</g>
+<!-- walking&#45;&gt;jumping -->
+<g id="edge28" class="edge"><title>walking-&gt;jumping</title>
+<path fill="none" stroke="black" d="M423,-278C474.823,-287.346 598.004,-337.668 650,-346"></path>
+<path fill="none" stroke="black" d="M652,-346C689.316,-347.837 730.598,-336.949 760.06,-326.843"></path>
+<polygon fill="black" stroke="black" points="761.323,-330.109 769.576,-323.465 758.981,-323.512 761.323,-330.109"></polygon>
+<text text-anchor="middle" x="575" y="-335.2" font-family="Times,serif" font-size="14.00"> leap </text>
+</g>
+<!-- walking&#45;&gt;falling -->
+<g id="edge38" class="edge"><title>walking-&gt;falling</title>
+<path fill="none" stroke="black" d="M353.41,-263.656C363.635,-284.062 382.245,-318.034 404,-343 424.338,-366.34 430.367,-373.041 458,-387 475.511,-395.846 780.696,-471.5 800,-475"></path>
+<path fill="none" stroke="black" d="M802,-475C894.304,-480.146 932.103,-341.764 944.225,-280.967"></path>
+<polygon fill="black" stroke="black" points="947.709,-281.381 946.137,-270.903 940.832,-280.074 947.709,-281.381"></polygon>
+</g>
+<!-- running&#45;&gt;standing -->
+<g id="edge22" class="edge"><title>running-&gt;standing</title>
+<path fill="none" stroke="black" d="M641.708,-186.289C632.231,-167.978 615.009,-139.891 592,-124 557.135,-99.9212 542.372,-99 500,-99 197,-99 197,-99 197,-99 144.99,-99 95.3686,-138.706 67.6736,-165.662"></path>
+<polygon fill="black" stroke="black" points="65.0511,-163.335 60.4599,-172.884 70.0035,-168.282 65.0511,-163.335"></polygon>
+<text text-anchor="middle" x="344" y="-103.2" font-family="Times,serif" font-size="14.00"> stop </text>
+</g>
+<!-- running&#45;&gt;dashing -->
+<g id="edge46" class="edge"><title>running-&gt;dashing</title>
+<path fill="none" stroke="black" d="M625.711,-189.632C615.529,-184 603.422,-177.799 592,-173.2 577.23,-167.253 560.619,-162.085 545.618,-157.948"></path>
+<polygon fill="black" stroke="black" points="546.097,-154.453 535.533,-155.251 544.289,-161.215 546.097,-154.453"></polygon>
+<text text-anchor="middle" x="575" y="-178.2" font-family="Times,serif" font-size="14.00"> dash </text>
+</g>
+<!-- running&#45;&gt;walking -->
+<g id="edge10" class="edge"><title>running-&gt;walking</title>
+<path fill="none" stroke="black" d="M611.708,-198.556C571.567,-194.561 507.564,-193.123 458,-215.2 447.722,-219.778 450.092,-228.026 440,-233 426.655,-239.577 411.049,-243.146 396.387,-245.006"></path>
+<polygon fill="black" stroke="black" points="396.013,-241.526 386.426,-246.037 396.734,-248.489 396.013,-241.526"></polygon>
+<text text-anchor="middle" x="499" y="-220.2" font-family="Times,serif" font-size="14.00"> walk </text>
+</g>
+<!-- running&#45;&gt;jumping -->
+<g id="edge30" class="edge"><title>running-&gt;jumping</title>
+<path fill="none" stroke="black" d="M673.205,-219.33C698.557,-237.66 741.16,-268.46 769.91,-289.246"></path>
+<polygon fill="black" stroke="black" points="768.199,-292.327 778.353,-295.35 772.3,-286.655 768.199,-292.327"></polygon>
+<text text-anchor="middle" x="725" y="-272.2" font-family="Times,serif" font-size="14.00"> leap </text>
+</g>
+<!-- running&#45;&gt;falling -->
+<g id="edge40" class="edge"><title>running-&gt;falling</title>
+<path fill="none" stroke="black" d="M689.615,-210.206C744.687,-219.292 847.028,-236.176 905.342,-245.797"></path>
+<polygon fill="black" stroke="black" points="904.914,-249.274 915.35,-247.448 906.053,-242.367 904.914,-249.274"></polygon>
+<text text-anchor="middle" x="801" y="-239.2" font-family="Times,serif" font-size="14.00"> fall </text>
+</g>
+<!-- jumping&#45;&gt;falling -->
+<g id="edge32" class="edge"><title>jumping-&gt;falling</title>
+<path fill="none" stroke="black" d="M833.175,-298.7C855.989,-289.698 887.057,-277.44 911.273,-267.885"></path>
+<polygon fill="black" stroke="black" points="912.835,-271.032 920.853,-264.106 910.266,-264.52 912.835,-271.032"></polygon>
+<text text-anchor="middle" x="879" y="-292.2" font-family="Times,serif" font-size="14.00"> apex </text>
+</g>
+<!-- falling&#45;&gt;standing -->
+<g id="edge34" class="edge"><title>falling-&gt;standing</title>
+<path fill="none" stroke="black" d="M947.206,-234.805C940.393,-176.794 910.711,0 802,0 197,0 197,0 197,0 150.418,0 137.2,-17.4106 106,-52 77.1222,-84.0147 60.162,-131.908 51.7321,-162.028"></path>
+<polygon fill="black" stroke="black" points="48.2984,-161.321 49.1006,-171.885 55.0616,-163.126 48.2984,-161.321"></polygon>
+<text text-anchor="middle" x="499" y="-4.2" font-family="Times,serif" font-size="14.00"> landed </text>
+</g>
+</g>
+</svg>

@@ -4,8 +4,10 @@
 import Phaser from 'phaser'
 
 // Import needed functions from utils and config settings
-import { sequentialNumArray } from '../utils.js'
 import config from '../config'
+
+// Bring in the base character state-machine for use
+import CharacterSM from './CharacterSM'
 
 /**
  * The main player-controllable sprite. This class encapsulates the logic for the main
@@ -17,153 +19,231 @@ import config from '../config'
  *
  * See Phaser.Sprite for more about sprite objects and what they support.
  */
-class MainPlayer extends Phaser.Sprite {
-  constructor ({ game, x, y }) {
+class MainPlayer extends Phaser.GameObjects.Sprite {
+  constructor ({ scene, x, y }) {
     // Initialize object basics
-    super(game, x, y, 'player-main', 0)
+    super(scene, x, y, 'player-main')
+    this.key = 'player-main'
     this.name = 'Main Player'
-    this.anchor.setTo(0.5, 1.0)
 
-    // turn off smoothing (this is pixel art)
-    this.smoothed = false
-
-    // Set a reference to the top-level phaser game object
-    this.game = game
-
-    // Setup all the animations
+    // Setup all the animations and the state machine
     this.setupAnimations()
-
-    // All variabes that start with '_' are meant to be private
-    // Initial state is 'unknown' as nothing has happened yet
-    this._move_state = MainPlayer.moveStates.UNKNOWN
+    this._moveFSM = new CharacterSM(this, this.enteringNewState.bind(this))
+    this.anims.play('standing')
 
     // These variables come from config.js rather than being hard-coded here so
     // they can be easily changed and played with
     this._SCALE = config.PLAYER_SCALE
     this._idle_countdown = config.IDLE_COUNTDOWN
 
-    // Initialize the scale of this sprite
-    this.scale.setTo(this._SCALE)
-  }
+    // Create sound sprite for running SFX
+    this.runningSFX = this.scene.sound.addAudioSprite('sounds')
 
-  // Setter and getter for the movement state property
-  get moveState () { return this._move_state }
-  set moveState (newState) {
-    if (this._move_state !== newState &&
-        (this._move_state !== MainPlayer.moveStates.IDLE ||
-         newState !== MainPlayer.moveStates.STOPPED)) {
-      // Update the state
-      this._move_state = newState
-      this.updateAnimation()
+    // Initialize the scale of this sprite
+    this.setScale(this._SCALE)
+
+    // Keep track of falling speed
+    this.maxAirSpeed = 0
+
+    // Setup player physics
+    if (this.scene.matter) {
+      this.scene.matter.add.gameObject(this)
+      this.setRectangle(60, 120, { inertia: Infinity })
+      this.setOrigin(0.5, 0.69)
+    } else {
+      this.setOrigin(0.5, 1.0)
     }
   }
 
-  // Functions to help manage the way the character is facing.
-  // We flip the sprite along the X dimensions to control this.
-  isFacingRight () { return (this.scale.x > 0) }
-  isFacingLeft () { return (this.scale.x < 0) }
-
-  makeFaceRight () { this.scale.set(this._SCALE, this._SCALE) }
-  makeFaceLeft () { this.scale.set(-this._SCALE, this._SCALE) }
-
-  makeAboutFace () {
-    if (this.facingRight()) {
-      this.makeFaceLeft()
-    } else {
-      this.makeFaceRight()
+  // Expose state machine for external management
+  get currentState () { return this._moveFSM.state }
+  do (transition) {
+    // Execute the given transition IF it is allowed
+    if (this._moveFSM.can(transition)) {
+      this._moveFSM[transition]()
     }
   }
 
   // Update animation to match state (called only when state changes)
-  updateAnimation () {
-    // Look at the current movement state and adjust the animation accordingly
-    switch (this._move_state) {
-      case MainPlayer.moveStates.STOPPED:
-        if (__DEV__) console.info('Playing "stop"')
-        this.animations.play('stop')
+  enteringNewState () {
+    // Anything extra when starting this animation?
+    switch (this._moveFSM.state) {
+      case 'standing':
+        // Restart the idle countdown
         this._idle_countdown = config.IDLE_COUNTDOWN
         break
 
-      case MainPlayer.moveStates.WALKING:
-        if (__DEV__) console.info('Playing "walk"')
-        this.animations.play('walk')
-        break
-
-      case MainPlayer.moveStates.RUNNING:
-        if (__DEV__) console.info('Playing "run"')
-        this.animations.play('run')
-        break
-
-      case MainPlayer.moveStates.IDLE:
-        if (__DEV__) console.info('Playing "idle"')
-        this.animations.play('idle')
+      case 'jumping':
+        this.setVelocityY(-10)
         break
     }
+
+    // Play the indicated animation (state names and animation names must match!)
+    if (__DEV__) { console.log(`Playing ${this._moveFSM.state}`) }
+    this.anims.play(this._moveFSM.state)
+  }
+
+  setSFXVolume (newVolume) {
+    this.runningSFX.volume = newVolume
   }
 
   // Function that runs every tick to update this sprite
-  update () {
-    // Always give parent a chance to update
-    super.update()
-
-    // Automatically switch to idle after designated countdown
-    if (this.moveState === MainPlayer.moveStates.STOPPED) {
-      if (this._idle_countdown <= 0) {
-        this.moveState = MainPlayer.moveStates.IDLE
+  update (time, delta) {
+    // Account for falling
+    if (this.body.velocity.y > 0.8 && this.currentState !== 'falling') {
+      this.do('fall')
+    } else {
+      // Trigger running sfx
+      if (this.currentState === 'running') {
+        if (!this.runningSFX.isPlaying) {
+          this.runningSFX.play('running', { volume: this.runningSFX.volume })
+        }
       } else {
-        this._idle_countdown -= 1
+        this.runningSFX.stop()
+      }
+
+      // Update according to the current state
+      switch (this.currentState) {
+        case 'walking':
+          this.setVelocityX(this.flipX ? -3.5 : 3.5)
+          break
+
+        case 'running':
+          this.setVelocityX(this.flipX ? -7 : 7)
+          break
+
+        case 'jumping':
+          // At the apex of the jump, transition to falling
+          if (this.body.velocity.y > 0) {
+            this.do('apex')
+          }
+          break
+
+        case 'falling':
+          // Keep track of max falling speed (for purposes of impact)
+          if (this.body.velocity.y > this.maxAirSpeed) {
+            this.maxAirSpeed = this.body.velocity.y
+          }
+
+          // When y velocity dampens out, go back to standing
+          if (Math.abs(this.body.velocity.y) < 0.1) {
+            this.do('landed')
+
+            // If moving fast enough, shake the screen to simulate impact
+            if (this.maxAirSpeed > 3) {
+              this.scene.cameras.main.shake(50, 0.001 * this.maxAirSpeed)
+            }
+
+            // Reset the max air speed variable
+            this.maxAirSpeed = 0
+          }
+          break
+
+        // Automatically switch from standing to idle after designated countdown
+        case 'standing':
+          if (this._idle_countdown <= 0) {
+            this.do('bored')
+          } else {
+            this._idle_countdown -= 1
+          }
+          break
+
+        // Do nothing in these states
+        default:
+        case 'idling':
+          break
       }
     }
   }
 
-  // Function to setup all the animation data
+  // Function to setup all the animation data (animation names match state names)
   setupAnimations () {
     // Basic movement animations
-    this.animations.add('stop', [48], 1, false)
-    this.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7], 10, true)
-    this.animations.add('run', [16, 17, 18, 19, 20, 21, 22, 23], 10, true)
+    this.scene.anims.create({
+      key: 'standing',
+      frames: [{ key: this.key, frame: 48 }],
+      frameRate: 1,
+      repeat: 0
+    })
+
+    this.scene.anims.create({
+      key: 'walking',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 0, end: 7 }),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    this.scene.anims.create({
+      key: 'running',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 16, end: 23 }),
+      frameRate: 10,
+      repeat: -1
+    })
 
     // Different parts of the idle animation
-    this.animations.add('idle', sequentialNumArray(48, 62), 4, false)
-    this.animations.add('idle_breath', sequentialNumArray(48, 60), 4, false)
-    this.animations.add('idle_yoyo', sequentialNumArray(144, 183), 8, false)
-    this.animations.add('idle_kick', sequentialNumArray(63, 71), 8, false)
+    this.scene.anims.create({
+      key: 'idling',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 48, end: 62 }),
+      frameRate: 4,
+      repeat: 0
+    })
 
-    // Action animations that override movement
+    this.scene.anims.create({
+      key: 'idle_breath',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 48, end: 60 }),
+      frameRate: 4,
+      repeat: 0
+    })
+
+    this.scene.anims.create({
+      key: 'idle_yoyo',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 144, end: 183 }),
+      frameRate: 8,
+      repeat: 0
+    })
+
+    this.scene.anims.create({
+      key: 'idle_kick',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 63, end: 71 }),
+      frameRate: 8,
+      repeat: 0
+    })
+
+    // Action animations
     // Note: these are not used in this example but are in the spritesheet
-    this.animations.add('dash', [34, 35, 36, 37], 20, false)
-    this.animations.add('jump', [96], 10, true)
-    this.animations.add('fall', [84], 10, true)
+    this.scene.anims.create({
+      key: 'dashing',
+      frames: this.scene.anims.generateFrameNumbers(this.key, { start: 34, end: 37 }),
+      frameRate: 20,
+      repeat: 0
+    })
 
-    // Setup the different idles animations to automatically trigger each other so it
+    this.scene.anims.create({
+      key: 'jumping',
+      frames: [{ key: this.key, frame: 96 }],
+      frameRate: 1,
+      repeat: 0
+    })
+
+    this.scene.anims.create({
+      key: 'falling',
+      frames: [{ key: this.key, frame: 84 }],
+      frameRate: 1,
+      repeat: 0
+    })
+
+    // Setup the different idle animations to automatically trigger each other so it
     // makes a nice long, distinct idle animation that loops forever
-    this.animations.getAnimation('idle').onComplete.add(() => {
-      this.play('idle_yoyo')
-    }, this)
-
-    this.animations.getAnimation('idle_yoyo').onComplete.add(() => {
-      this.play('idle_breath')
-    }, this)
-
-    this.animations.getAnimation('idle_breath').onComplete.add(() => {
-      this.play('idle_kick')
-    }, this)
-
-    this.animations.getAnimation('idle_kick').onComplete.add(() => {
-      this.play('idle')
-    }, this)
+    this.on('animationcomplete', (anim) => {
+      switch (anim.key) {
+        case 'idling': this.anims.play('idle_yoyo'); break
+        case 'idle_yoyo': this.anims.play('idle_breath'); break
+        case 'idle_breath': this.anims.play('idle_kick'); break
+        case 'idle_kick': this.anims.play('idling'); break
+      }
+    })
   }
 }
-
-// All possible player 'movement states'
-// Note: this is an example of a static 'enum' in JavaScript
-MainPlayer.moveStates = Object.freeze({
-  UNKNOWN: 'unknown',
-  STOPPED: 'stopped',
-  WALKING: 'walking',
-  RUNNING: 'running',
-  IDLE: 'idle'
-})
 
 // Expose the MainPlayer class to other files
 export default MainPlayer
