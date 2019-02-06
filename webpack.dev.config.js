@@ -64,6 +64,7 @@ module.exports = {
       },
       hash: false
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new BrowserSyncPlugin({
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,

@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 // Phaser webpack config
 var phaserModule = path.join(__dirname, '/node_modules/phaser/')
@@ -39,18 +39,7 @@ module.exports = {
           enforce: true
         }
       }
-    },
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          drop_console: true,
-          minimize: true,
-          output: {
-            comments: false
-          }
-        }
-      })
-    ],
+    }
   },
   mode: 'production',
   plugins: [
@@ -72,6 +61,7 @@ module.exports = {
       },
       hash: false
     }),
+    new MinifyPlugin({}, { comments: false }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
   module: {

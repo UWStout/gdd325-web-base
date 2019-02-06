@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // Phaser webpack config
@@ -40,18 +40,7 @@ module.exports = {
           enforce: true
         }
       }
-    },
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          drop_console: true,
-          minimize: true,
-          output: {
-            comments: false
-          }
-        }
-      })
-    ],
+    }
   },
   mode: 'production',
   watch: true,
@@ -74,6 +63,7 @@ module.exports = {
       },
       hash: false
     }),
+    new MinifyPlugin({}, { comments: false }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new BrowserSyncPlugin({
       host: process.env.IP || 'localhost',
