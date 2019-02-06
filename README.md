@@ -1,6 +1,20 @@
 # GDD 325: 2D Web Game Base
 #### A code base for student games developed in GDD 325 at UW Stout
 
+# Quick Start
+You should take time to read all the info below ... but if you want to get started quickly here's the TL;DR
+- Install [node.js](https://nodejs.org/) LTS version (the even version, not the ODD one)
+- Install [ffmpeg](https://ffmpeg.zeranoe.com/builds/) as follows
+  - Download the archive from the link above
+  - Go to the folder %LOCALAPPDATA% on your computer
+  - Create a new folder 'ffmpeg' and unzip all contents into that folder
+  - Add '%LOCALAPPDATA%\ffmpeg\bin' to your path (edit your account environment variables to do this)
+- install git for windows and a code editor (I recommend VSCode)
+- Open a bash window in the directory where you want to install the project
+- Clone the repo with 'git clone URL .' (don't forget the period)
+- In that same directory, ruyn npm install and then npm run sfx
+- run npm run dev to start the game (it will automatically open in your default browser)
+
 # Setup
 Begin by downloading the latest release version form the 'releases' on GitHub. You may also fork or clone this repo however you will then have the entire revision history of THIS repo in addition to your own and this is not recommended.
 
