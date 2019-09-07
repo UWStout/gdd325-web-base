@@ -4,7 +4,7 @@
 import Phaser from 'phaser'
 
 // IMport the update plugin
-import 'phaser-plugin-update'
+import PhaserUpdatePlugin from 'phaser-plugin-update'
 import PhaserDebugDrawPlugin from 'phaser-plugin-debug-draw'
 import UIPlugin from '../plugins/rexrainbow/rexuiplugin.min'
 
@@ -19,9 +19,9 @@ import PauseMenuScene from './scenes/PauseMenuScene' // A menu displayed while t
 import config from './config'
 
 // Setup the plugins
-let scenePlugins = [{
+const scenePlugins = [{
   key: 'updatePlugin',
-  plugin: Phaser.Plugins.UpdatePlugin,
+  plugin: PhaserUpdatePlugin,
   mapping: 'updates'
 }, {
   key: 'rexUI',

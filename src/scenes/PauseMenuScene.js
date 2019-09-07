@@ -29,8 +29,8 @@ class PauseMenuScene extends Phaser.Scene {
 
   create () {
     // Local variables for accessing width and height
-    let width = this.cameras.main.width
-    let height = this.cameras.main.height
+    const width = this.cameras.main.width
+    const height = this.cameras.main.height
 
     this.setupKeyboard()
     this.setupAudio()
@@ -65,15 +65,15 @@ class PauseMenuScene extends Phaser.Scene {
 
   setupMenu (width, height) {
     // Background for the menu
-    let recWidth = 0.9 * width
-    let recHeight = 0.9 * height
-    let background = this.add.rectangle(
+    const recWidth = 0.9 * width
+    const recHeight = 0.9 * height
+    const background = this.add.rectangle(
       width / 2, height / 2,
       recWidth, recHeight,
       0x999999, 1.0)
 
     // Simple pause message
-    let message = this.add.text(width / 2, height / 2, 'Paused (press esc to resume)')
+    const message = this.add.text(width / 2, height / 2, 'Paused (press esc to resume)')
 
     // Configure all the control message font properties
     message.setStyle({
@@ -87,11 +87,11 @@ class PauseMenuScene extends Phaser.Scene {
     centerGameObjects([background, message])
 
     // Text label for the music slider
-    let musicVolLabel = this.add.text(width / 2 - 220, 200, 'Music Volume:')
+    const musicVolLabel = this.add.text(width / 2 - 220, 200, 'Music Volume:')
     musicVolLabel.setOrigin(1.0, 0.5)
 
     // Value lable for the music slider
-    let musicVolValLabel = this.add.text(width / 2 + 220, 200, '100')
+    const musicVolValLabel = this.add.text(width / 2 + 220, 200, '100')
     musicVolValLabel.setOrigin(0.0, 0.5)
 
     // Add a slider for muisic volume control
@@ -116,11 +116,11 @@ class PauseMenuScene extends Phaser.Scene {
     this.musicSlider.layout()
 
     // Text label for the sfx slider
-    let sfxVolLabel = this.add.text(width / 2 - 220, 250, 'SFX Volume:')
+    const sfxVolLabel = this.add.text(width / 2 - 220, 250, 'SFX Volume:')
     sfxVolLabel.setOrigin(1.0, 0.5)
 
     // Value label for the sfx slider
-    let sfxVolValLabel = this.add.text(width / 2 + 220, 250, '100')
+    const sfxVolValLabel = this.add.text(width / 2 + 220, 250, '100')
     sfxVolValLabel.setOrigin(0.0, 0.5)
 
     // Add a slider for sfx volume control
@@ -161,7 +161,7 @@ class PauseMenuScene extends Phaser.Scene {
     })
 
     // Mouse/touch up to stop the music/sfx and renable the other slider
-    this.input.addUpCallback(() => {
+    this.input.addListener('pointerup', () => {
       if (this.runningSFX.isPlaying) {
         this.runningSFX.stop()
       }
@@ -172,7 +172,7 @@ class PauseMenuScene extends Phaser.Scene {
 
       this.musicSlider.input.enabled = true
       this.sfxSlider.input.enabled = true
-    }, false)
+    }, this)
   }
 
   update () {

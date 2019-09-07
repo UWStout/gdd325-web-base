@@ -25,8 +25,8 @@ class TestScene extends Phaser.Scene {
 
   create () {
     // Local variables for accessing width and height
-    let width = this.game.config.width
-    let height = this.game.config.height
+    const width = this.game.config.width
+    const height = this.game.config.height
 
     // Start playing the background music
     this.setupAudio()
@@ -44,7 +44,7 @@ class TestScene extends Phaser.Scene {
     this.setupCamera()
 
     // Compute a reasonable height for the floor based on the height of the player sprite
-    let floorHeight = this.player.y
+    const floorHeight = this.player.y
     this.floor = this.add.graphics()
     this.floor.fillStyle(0xabb8c2, 1.0)
     this.floor.fillRect(0, floorHeight, this.cameras.main._bounds.width, height / 2)
@@ -90,7 +90,7 @@ class TestScene extends Phaser.Scene {
   setupText () {
     // Title message to show on screen
     const bannerText = 'UW Stout / GDD 325 - 2D Web Game Base'
-    let banner = this.add.text(this.game.config.width / 2, 120, bannerText)
+    const banner = this.add.text(this.game.config.width / 2, 120, bannerText)
 
     // Configure all the title message font properties
     banner.setStyle({
@@ -105,7 +105,7 @@ class TestScene extends Phaser.Scene {
 
     // Title message to show on screen
     const banner2Text = 'Brought to you by Seth Berrier'
-    let banner2 = this.add.text(this.cameras.main._bounds.width - this.game.config.width / 2, 120, banner2Text)
+    const banner2 = this.add.text(this.cameras.main._bounds.width - this.game.config.width / 2, 120, banner2Text)
 
     // Configure all the title message font properties
     banner2.setStyle({
@@ -146,7 +146,7 @@ class TestScene extends Phaser.Scene {
     this.music = this.sound.addAudioSprite('sounds')
 
     // Make the music flow continuously
-    this.music.on('ended', (sound) => {
+    this.music.on('complete', (sound) => {
       switch (sound.currentMarker.name) {
         case 'music-intro': this.music.play('music-theme1', { volume: this.music.volume }); break
         case 'music-theme1': this.music.play('music-theme2', { volume: this.music.volume }); break
@@ -155,7 +155,7 @@ class TestScene extends Phaser.Scene {
         case 'music-theme4': this.music.play('music-bridge', { volume: this.music.volume }); break
         case 'music-bridge': this.music.play('music-theme2', { volume: this.music.volume }); break
       }
-    })
+    }, this)
   }
 
   setupKeyboard () {
@@ -206,6 +206,7 @@ class TestScene extends Phaser.Scene {
   }
 
   showPauseMenu () {
+    console.log('Showing Pause Menu')
     this.pauseTransition = false
     this.scene.pause()
     this.scene.launch('PauseMenu', {
@@ -227,7 +228,8 @@ class TestScene extends Phaser.Scene {
       this.anims.pauseAll()
       this.escKey.oldDown = true
       this.pauseTransition = true
-      this.blurOut.restart()
+      if (this.blurOut.paused) this.blurOut.play()
+      else this.blurOut.restart()
     }
 
     if (this.escKey.isUp) {
@@ -253,7 +255,7 @@ class TestScene extends Phaser.Scene {
     if (this.cursors.shift.isDown) { speed *= 2 }
 
     // Determine facing direction
-    let absSpeed = Math.abs(speed)
+    const absSpeed = Math.abs(speed)
     if (absSpeed !== 0) {
       this.player.setFlipX(absSpeed !== speed)
     }
@@ -294,23 +296,13 @@ class TestScene extends Phaser.Scene {
     this.music.resume()
     this.input.keyboard.resetKeys()
     this.pauseTransition = true
-    this.blurIn.restart()
+    if (this.blurIn.paused) this.blurIn.play()
+    else this.blurIn.restart()
   }
 
   render () {
-    // Optionally render some development/debugging info
-    if (false) { // __DEV__) {
-      // Print info about the player sprite at (32, 32) -> top left
-      this.game.debug.spriteInfo(this.player, 32, 32)
-
-      // Print some text about the player state machine
-      this.game.debug.text(`Movement State: ${this.player.currentState}`, this.sys.game.config.width - 350, 32)
-
-      // Print a warning that the game is running in DEV/Debug mode
-      this.game.debug.text('DEV BUILD', this.cameras.main.width - 100, this.cameras.main.height - 10, '#AA0000')
-    }
   }
 }
 
-// Expose the class TestLevel to other files
+// Expose the class TestScene to other files
 export default TestScene
