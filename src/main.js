@@ -52,7 +52,7 @@ class Game extends Phaser.Game {
       height: config.gameHeight,
       type: Phaser.WEBGL,
       parent: 'content',
-      title: 'Example Game for GDD325',
+      title: 'Example Game for UW Stout\'s GDD325',
       backgroundColor: '#7f7f7f',
       plugins: {
         scene: scenePlugins
